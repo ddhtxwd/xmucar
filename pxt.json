@@ -1,7 +1,7 @@
 {
-    "name": "物教IoT",
+    "name": "XMUCAR",
     "version": "0.0.0",
-    "description": "物教 iOT by XMU",
+    "description": "CAR by XMU",
     "license": "MIT",
     "dependencies": {
         "core": "*",
