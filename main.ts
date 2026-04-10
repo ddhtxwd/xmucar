@@ -269,6 +269,61 @@ namespace XMU_CAR {
         }
     }
 
+
+    /**
+     * 循迹传感器
+     */
+      let outPin1 = 0;
+      let outPin2 = 0;
+      let outPin3 = 0;
+      let outPin4 = 0;
+      /**
+       * 四路循迹传感器初始化
+       */
+      //% blockId=four_sensor_tracking block="四路循迹初始化引脚OUT0|%pin1|引脚OUT1|%pin2|引脚OUT2|%pin3|引脚OUT3|%pin4"  group="循迹传感器"
+      //% inlineInputMode=inline
+      //% weight=73
+      //% subcategory="传感器"
+      export function four_sensor_tracking(pin1: DigitalPin, pin2: DigitalPin, pin3: DigitalPin, pin4: DigitalPin): void {
+        outPin1 = pin1;
+        outPin2 = pin2;
+        outPin3 = pin3;
+        outPin4 = pin4;
+      }
+      
+      //% blockId=four_sensor_trackingValue block="四路循迹传感器获取的值"  group="循迹传感器"
+      //% inlineInputMode=inline
+      //% weight=72
+      //% subcategory="传感器"
+      export function four_sensor_trackingValue(): number {
+        let result = 0;
+//         pins.digitalWritePin(outPin1, 0)
+//         pins.digitalWritePin(outPin2, 0)
+//         pins.digitalWritePin(outPin3, 0)
+//         pins.digitalWritePin(outPin4, 0)
+        if (pins.digitalReadPin(outPin1) == 1) {
+          result = 1 | result;
+        }else {
+          result = 0 | result;
+        }
+        if (pins.digitalReadPin(outPin2) == 1) {
+          result = 2 | result;
+        }else {
+          result = 0 | result;
+        }
+        if (pins.digitalReadPin(outPin3) == 1) {
+          result = 4 | result;
+        }else {
+          result = 0 | result;
+        }
+         if (pins.digitalReadPin(outPin4) == 1) {
+          result = 8 | result;
+        }else {
+          result = 0 | result;
+        }
+        return result;
+    }
+    
     function signal_dht11(pin: DigitalPin): void {
         pins.digitalWritePin(pin, 0);
         basic.pause(18);
@@ -922,73 +977,6 @@ namespace XMU_CAR {
         }
     }
 
-
-/**
-     * 循迹传感器
-     */
-    //% blockId=sensor_tracking block="引脚 %pin 检测到黑线？"  group="循迹传感器"
-    //% weight=74
-    //% subcategory="传感器"
-    //% inlineInputMode=inline
-    export function sensor_tracking(pin: DigitalPin): boolean {
-        //pins.digitalWritePin(pin, 0)
-           if (pins.digitalReadPin(pin) == 1) {
-              return false;
-          }else {
-              return true;
-          }
-      }
-      
-      let outPin1 = 0;
-      let outPin2 = 0;
-      let outPin3 = 0;
-      let outPin4 = 0;
-      /**
-       * 四路循迹传感器初始化
-       */
-      //% blockId=four_sensor_tracking block="四路循迹初始化引脚OUT0|%pin1|引脚OUT1|%pin2|引脚OUT2|%pin3|引脚OUT3|%pin4"  group="循迹传感器"
-      //% inlineInputMode=inline
-      //% weight=73
-      //% subcategory="传感器"
-      export function four_sensor_tracking(pin1: DigitalPin, pin2: DigitalPin, pin3: DigitalPin, pin4: DigitalPin): void {
-        outPin1 = pin1;
-        outPin2 = pin2;
-        outPin3 = pin3;
-        outPin4 = pin4;
-      }
-      
-      //% blockId=four_sensor_trackingValue block="四路循迹传感器获取的值"  group="循迹传感器"
-      //% inlineInputMode=inline
-      //% weight=72
-      //% subcategory="传感器"
-      export function four_sensor_trackingValue(): number {
-        let result = 0;
-//         pins.digitalWritePin(outPin1, 0)
-//         pins.digitalWritePin(outPin2, 0)
-//         pins.digitalWritePin(outPin3, 0)
-//         pins.digitalWritePin(outPin4, 0)
-        if (pins.digitalReadPin(outPin1) == 1) {
-          result = 1 | result;
-        }else {
-          result = 0 | result;
-        }
-        if (pins.digitalReadPin(outPin2) == 1) {
-          result = 2 | result;
-        }else {
-          result = 0 | result;
-        }
-        if (pins.digitalReadPin(outPin3) == 1) {
-          result = 4 | result;
-        }else {
-          result = 0 | result;
-        }
-         if (pins.digitalReadPin(outPin4) == 1) {
-          result = 8 | result;
-        }else {
-          result = 0 | result;
-        }
-        return result;
-      }
 
     //% blockId="dht11value_v2" block="引脚 %dht11pin 获取温湿度传感器的 %dht11type"  group="温湿度传感器"
     //% subcategory="micro:bit(V2)"
