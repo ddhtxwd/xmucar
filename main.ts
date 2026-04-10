@@ -1170,7 +1170,7 @@ namespace XMU_CAR {
      * speed(0~255).
     */
     //% weight=90
-    //% blockId=motor_MotorRun block="Motor|%index|dir|%Dir|speed|%speed"
+    //% blockId=motor_MotorRun block="电机转动|%index|方向|%Dir|速度|%speed"
     //% speed.min=0 speed.max=255
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2
     //% direction.fieldEditor="gridpicker" direction.fieldOptions.columns=2
@@ -1204,7 +1204,7 @@ namespace XMU_CAR {
 	 * Stop the dc motor.
     */
     //% weight=20
-    //% blockId=motor_motorStop block="Motor stop|%index"
+    //% blockId=motor_motorStop block="停止电机|%index"
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2 
     //% subcategory="电机"
     export function motorStop(index: Motors) {
@@ -1219,7 +1219,7 @@ namespace XMU_CAR {
 	 * Stop all motors
     */
     //% weight=10
-    //% blockId=motor_motorStopAll block="Motor Stop All"
+    //% blockId=motor_motorStopAll block="停止全部电机"
     //% subcategory="电机"
     export function motorStopAll(): void {
         if (!initialized2) {
