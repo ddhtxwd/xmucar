@@ -75,7 +75,7 @@ enum DHT11Type {
 }
 
 
-//% weight=100 color=#0fbc11 icon="\uf1eb"  block="XMU_CAR"
+//% weight=100 color=#0fbc11 icon="\uf013"  block="XMU_CAR"
 namespace XMU_CAR {
 	
 	let COMMAND_I2C_ADDRESS = 0x24
@@ -605,7 +605,7 @@ namespace XMU_CAR {
         }
     }
 
-    let initialized = false
+    //let initialized = false
     //let neoStrip: neopixel.Strip;
     let emRGBLight: EMRGBLight.EmakefunRGBLight;
     let board_emRGBLight: EMRGBLight.EmakefunRGBLight;
@@ -1138,7 +1138,7 @@ namespace XMU_CAR {
 
 
 
-    let initialized = false
+    let initialized2 = false
 
     function i2cWrite(addr: number, reg: number, value: number) {
         let buf = pins.createBuffer(2)
@@ -1162,7 +1162,7 @@ namespace XMU_CAR {
     function initPCA9685(): void {
         i2cWrite(PCA9685_ADDRESS, MODE1, 0x00)
         setFreq(50);
-        initialized = true
+        initialized2 = true
     }
 
     function setFreq(freq: number): void {
@@ -1263,7 +1263,7 @@ namespace XMU_CAR {
     //% degree.min=0 degree.max=180
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=4
     export function servo(index: Servos, degree: number): void {
-        if (!initialized) {
+        if (!initialized2) {
             initPCA9685()
         }
         // 50hz
@@ -1283,7 +1283,7 @@ namespace XMU_CAR {
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2
     //% direction.fieldEditor="gridpicker" direction.fieldOptions.columns=2
     export function MotorRun(index: Motors, direction: Dir, speed: number): void {
-        if (!initialized) {
+        if (!initialized2) {
             initPCA9685()
         }
         speed = speed * 16 * direction; // map 255 to 4096
@@ -1315,7 +1315,7 @@ namespace XMU_CAR {
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2
     //% direction.fieldEditor="gridpicker" direction.fieldOptions.columns=2
     export function stepperDegree_42(index: Steppers, direction: Dir, degree: number): void {
-        if (!initialized) {
+        if (!initialized2) {
             initPCA9685()
         }
         // let Degree = Math.abs(degree);
@@ -1362,7 +1362,7 @@ namespace XMU_CAR {
     //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2
     //% direction.fieldEditor="gridpicker" direction.fieldOptions.columns=2
     export function stepperDegree_28(index: Steppers, direction: Dir, degree: number): void {
-        if (!initialized) {
+        if (!initialized2) {
             initPCA9685()
         }
         if (degree == 0) {
@@ -1409,7 +1409,7 @@ namespace XMU_CAR {
     //% direction1.fieldEditor="gridpicker" direction1.fieldOptions.columns=2
     //% direction2.fieldEditor="gridpicker" direction2.fieldOptions.columns=2
     export function stepperDegreeDual_42(stepper: Stepper, direction1: Dir, degree1: number, direction2: Dir, degree2: number): void {
-        if (!initialized) {
+        if (!initialized2) {
             initPCA9685()
         }
         let timeout1 = 0;
