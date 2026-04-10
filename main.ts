@@ -273,55 +273,47 @@ namespace XMU_CAR {
     /**
      * 循迹传感器
      */
-      let outPin1 = 0;
-      let outPin2 = 0;
-      let outPin3 = 0;
-      let outPin4 = 0;
-      /**
-       * 四路循迹传感器初始化
-       */
-      //% blockId=four_sensor_tracking block="四路循迹初始化引脚OUT0|%pin1|引脚OUT1|%pin2|引脚OUT2|%pin3|引脚OUT3|%pin4"  group="循迹传感器"
-      //% inlineInputMode=inline
-      //% weight=73
-      //% subcategory="传感器"
-      export function four_sensor_tracking(pin1: DigitalPin, pin2: DigitalPin, pin3: DigitalPin, pin4: DigitalPin): void {
-        outPin1 = pin1;
-        outPin2 = pin2;
-        outPin3 = pin3;
-        outPin4 = pin4;
-      }
-      
-      //% blockId=four_sensor_trackingValue block="四路循迹传感器获取的值"  group="循迹传感器"
-      //% inlineInputMode=inline
-      //% weight=72
-      //% subcategory="传感器"
-      export function four_sensor_trackingValue(): number {
-        let result = 0;
-//         pins.digitalWritePin(outPin1, 0)
-//         pins.digitalWritePin(outPin2, 0)
-//         pins.digitalWritePin(outPin3, 0)
-//         pins.digitalWritePin(outPin4, 0)
-        if (pins.digitalReadPin(outPin1) == 1) {
-          result = 1 | result;
-        }else {
-          result = 0 | result;
+    export enum LineSensor {
+        S0 = 0x0,
+        S1 = 0x1,
+        S2 = 0x2,
+        S3 = 0x3,
+        S4 = 0x4
+    }
+
+    const PCA9557_ADDRESS=0x18
+    const PCA9557_INPUT_PORT_REG=0x00
+    const PCA9557_CONFIG_REG=0x03
+    
+    let initialized3 = false
+
+    function initPCA9557(): void {
+        i2cWrite(PCA9557_ADDRESS, PCA9557_CONFIG_REG, 0xff)
+        initialized3 = true
+    }
+    
+
+        /**
+	 * 读取循迹值
+     * S0~S4.
+     * value(0~1).
+    */
+    //% weight=90
+    //% blockId=sensor_line block="循迹传感器 %index 的值"
+    //% index.fieldEditor="gridpicker" index.fieldOptions.columns=2
+    //% inlineInputMode=inline
+    //% subcategory="传感器"
+    export function line(index: LineSensor): boolean {
+        if (!initialized3) {
+            initPCA9557()
         }
-        if (pins.digitalReadPin(outPin2) == 1) {
-          result = 2 | result;
-        }else {
-          result = 0 | result;
+        let test = i2cRead(PCA9557_ADDRESS, PCA9557_INPUT_PORT_REG);
+        let bit = test << index;
+        if (bit & 0x01) {
+            return true;
+        } else {
+            return false;
         }
-        if (pins.digitalReadPin(outPin3) == 1) {
-          result = 4 | result;
-        }else {
-          result = 0 | result;
-        }
-         if (pins.digitalReadPin(outPin4) == 1) {
-          result = 8 | result;
-        }else {
-          result = 0 | result;
-        }
-        return result;
     }
     
     function signal_dht11(pin: DigitalPin): void {
