@@ -308,7 +308,7 @@ namespace XMU_CAR {
             initPCA9557()
         }
         let test = i2cRead(PCA9557_ADDRESS, PCA9557_INPUT_PORT_REG);
-        let bit = test << index;
+        let bit = test >> index;
         if (bit & 0x01) {
             if (index == 4) return false;
             else return true;
